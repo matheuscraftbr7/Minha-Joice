@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria de Fotos — Matheus & Joice</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #8B5CF6;
+      --color-primary-dark: #6D28D9;
+      --color-primary-light: #DDD6FE;
+      --color-accent: #18181B;
+      --color-accent-light: #27272A;
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F8F5FF;
+      --color-card-bg: #FFFFFF;
+      --color-text: #18181B;
+      --color-text-muted: #6B7280;
+
+      --font-display: "Cormorant Garamond", serif;
+      --font-script: "Pinyon Script", cursive;
+      --font-body: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-[#FAF5FF] via-[#F5EDFF] to-[#E9D5FF] text-text font-body antialiased min-h-screen flex flex-col selection:bg-primary-light selection:text-primary-dark">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary-light/50 shadow-xs transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-script text-3xl sm:text-4xl text-accent hover:text-primary transition">Matheus & Joice</a>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden xl:flex items-center space-x-6 text-[11px] font-semibold tracking-wider uppercase text-accent/80">
+        <a href="index.html" class="hover:text-primary transition whitespace-nowrap">Início</a>
+        <a href="index.html#historia" class="hover:text-primary transition whitespace-nowrap">Nossa História</a>
+        <a href="index.html#cerimonia" class="hover:text-primary transition whitespace-nowrap">Cerimônia</a>
+        <a href="index.html#traje" class="hover:text-primary transition whitespace-nowrap">Traje</a>
+        <a href="index.html#faq" class="hover:text-primary transition whitespace-nowrap">FAQ</a>
+        <a href="galeria.html" class="hover:text-primary transition whitespace-nowrap">Galeria</a>
+        <a href="presentes.html" class="hover:text-primary transition whitespace-nowrap">Presentes</a>
+        <a href="transmissao.html" class="hover:text-primary transition whitespace-nowrap">Ao Vivo</a>
+      </div>
+
+      <!-- Quick Action CTA & Mobile Menu Toggle Button -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="index.html#rsvp" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary text-white text-[11px] uppercase font-bold tracking-wider hover:bg-primary-dark shadow-xs transition whitespace-nowrap">
+          Confirmar Presença
+        </a>
+
+        <!-- Hamburger Icon Button for Mobile & Medium screens -->
+        <button id="btnMobileMenu" aria-label="Abrir Menu" class="xl:hidden p-2.5 rounded-xl border border-primary-light text-accent hover:bg-bg-alt focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center">
+          <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileDrawer" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-primary-light px-4 py-6 space-y-3 animate-fade-in shadow-lg">
+      <a href="index.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Início</a>
+      <a href="index.html#historia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Nossa História</a>
+      <a href="index.html#cerimonia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Cerimônia</a>
+      <a href="index.html#traje" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Traje</a>
+      <a href="index.html#faq" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">FAQ</a>
+      <a href="index.html#rsvp" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">RSVP (Confirmar Presença)</a>
+      <a href="galeria.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Galeria</a>
+      <a href="presentes.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Presentes</a>
+      <a href="transmissao.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Ao Vivo</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-28 pb-16 px-4">
+    <div class="max-w-5xl mx-auto space-y-12">
+      
+      <!-- Welcome Header -->
+      <div class="text-center space-y-4">
+        <span class="text-xs uppercase tracking-[0.2em] text-primary font-bold bg-white px-4 py-1.5 rounded-full border border-primary-light shadow-xs">
+          Nossos Melhores Momentos
+        </span>
+        <h1 class="font-display text-4xl sm:text-6xl text-accent font-semibold">Galeria de Fotos</h1>
+        <p class="text-text-muted text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          Um pouquinho dos ensaios e momentos especiais que vivenciamos até a chegada desse dia tão esperado.
+        </p>
+      </div>
+
+      <!-- Masonry Grid Placeholder -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        
+        <div class="group relative bg-white p-4 rounded-3xl border border-primary-light/60 shadow-xs overflow-hidden hover:border-primary transition">
+          <div class="aspect-4/5 bg-primary-light/40 rounded-2xl flex items-center justify-center text-primary-dark font-display text-lg italic group-hover:scale-[1.02] transition duration-300 border border-primary-light/50">
+            Foto Ensaio Pré-Wedding #1
+          </div>
+          <p class="text-xs text-text-muted text-center pt-3 font-semibold">O Pedido de Casamento</p>
+        </div>
+
+        <div class="group relative bg-white p-4 rounded-3xl border border-primary-light/60 shadow-xs overflow-hidden hover:border-primary transition">
+          <div class="aspect-4/5 bg-bg-alt rounded-2xl flex items-center justify-center text-accent font-display text-lg italic group-hover:scale-[1.02] transition duration-300 border border-primary-light/50">
+            Foto Ensaio Pré-Wedding #2
+          </div>
+          <p class="text-xs text-text-muted text-center pt-3 font-semibold">Passeio ao Pôr do Sol</p>
+        </div>
+
+        <div class="group relative bg-white p-4 rounded-3xl border border-primary-light/60 shadow-xs overflow-hidden hover:border-primary transition">
+          <div class="aspect-4/5 bg-primary-light/40 rounded-2xl flex items-center justify-center text-primary-dark font-display text-lg italic group-hover:scale-[1.02] transition duration-300 border border-primary-light/50">
+            Foto Ensaio Pré-Wedding #3
+          </div>
+          <p class="text-xs text-text-muted text-center pt-3 font-semibold">Viagem Inesquecível</p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 bg-accent text-white/80 text-center text-xs space-y-2">
+    <p class="font-script text-3xl text-primary-light">Matheus & Joice</p>
+    <p>© 2026 — Memórias para a vida toda.</p>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle Script
+    const btnMobileMenu = document.getElementById('btnMobileMenu');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('click', () => {
+        const isHidden = mobileDrawer.classList.contains('hidden');
+        if (isHidden) {
+          mobileDrawer.classList.remove('hidden');
+          hamburgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        } else {
+          mobileDrawer.classList.add('hidden');
+          hamburgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

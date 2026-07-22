@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Presentes — Matheus & Joice</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #8B5CF6;
+      --color-primary-dark: #6D28D9;
+      --color-primary-light: #DDD6FE;
+      --color-accent: #18181B;
+      --color-accent-light: #27272A;
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F8F5FF;
+      --color-card-bg: #FFFFFF;
+      --color-text: #18181B;
+      --color-text-muted: #6B7280;
+
+      --font-display: "Cormorant Garamond", serif;
+      --font-script: "Pinyon Script", cursive;
+      --font-body: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-[#FAF5FF] via-[#F5EDFF] to-[#E9D5FF] text-text font-body antialiased min-h-screen flex flex-col selection:bg-primary-light selection:text-primary-dark">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary-light/50 shadow-xs transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-script text-3xl sm:text-4xl text-accent hover:text-primary transition">Matheus & Joice</a>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden xl:flex items-center space-x-6 text-[11px] font-semibold tracking-wider uppercase text-accent/80">
+        <a href="index.html" class="hover:text-primary transition whitespace-nowrap">Início</a>
+        <a href="index.html#historia" class="hover:text-primary transition whitespace-nowrap">Nossa História</a>
+        <a href="index.html#cerimonia" class="hover:text-primary transition whitespace-nowrap">Cerimônia</a>
+        <a href="index.html#traje" class="hover:text-primary transition whitespace-nowrap">Traje</a>
+        <a href="index.html#faq" class="hover:text-primary transition whitespace-nowrap">FAQ</a>
+        <a href="galeria.html" class="hover:text-primary transition whitespace-nowrap">Galeria</a>
+        <a href="presentes.html" class="hover:text-primary transition whitespace-nowrap">Presentes</a>
+        <a href="transmissao.html" class="hover:text-primary transition whitespace-nowrap">Ao Vivo</a>
+      </div>
+
+      <!-- Quick Action CTA & Mobile Menu Toggle Button -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="index.html#rsvp" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary text-white text-[11px] uppercase font-bold tracking-wider hover:bg-primary-dark shadow-xs transition whitespace-nowrap">
+          Confirmar Presença
+        </a>
+
+        <!-- Hamburger Icon Button for Mobile & Medium screens -->
+        <button id="btnMobileMenu" aria-label="Abrir Menu" class="xl:hidden p-2.5 rounded-xl border border-primary-light text-accent hover:bg-bg-alt focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center">
+          <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileDrawer" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-primary-light px-4 py-6 space-y-3 animate-fade-in shadow-lg">
+      <a href="index.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Início</a>
+      <a href="index.html#historia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Nossa História</a>
+      <a href="index.html#cerimonia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Cerimônia</a>
+      <a href="index.html#traje" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Traje</a>
+      <a href="index.html#faq" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">FAQ</a>
+      <a href="index.html#rsvp" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">RSVP (Confirmar Presença)</a>
+      <a href="galeria.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Galeria</a>
+      <a href="presentes.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Presentes</a>
+      <a href="transmissao.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Ao Vivo</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-28 pb-16 px-4">
+    <div class="max-w-4xl mx-auto space-y-12">
+      
+      <!-- Welcome Header -->
+      <div class="text-center space-y-4">
+        <span class="text-xs uppercase tracking-[0.2em] text-accent font-semibold bg-white px-4 py-1.5 rounded-full border border-accent/20">
+          Sua presença é nosso maior presente
+        </span>
+        <h1 class="font-display text-4xl sm:text-6xl text-accent font-semibold">Lista de Presentes</h1>
+        <p class="text-text-muted text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          Se você deseja nos abençoar com um presente, fique à vontade para escolher uma cota de Lua de Mel, contribuir com um valor da sua escolha ou enviar uma mensagem de carinho!
+        </p>
+      </div>
+
+      <!-- PIX Card Oficial Joice Kelly -->
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-primary-light/60 shadow-xs text-center space-y-6">
+        <div class="w-16 h-16 bg-primary-light/50 rounded-full flex items-center justify-center text-primary-dark text-3xl mx-auto border border-primary-light">
+          💸
+        </div>
+        <div>
+          <h2 class="font-display text-2xl sm:text-3xl text-accent font-semibold">Presente em PIX (Qualquer Valor)</h2>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">Chave PIX oficial em nome de <strong>Joice Kelly Santos Anunciação</strong></p>
+        </div>
+
+        <!-- PIX Copy Box -->
+        <div class="max-w-xl mx-auto bg-bg-alt p-4 rounded-2xl border border-primary-light/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <span id="pixKey" class="text-xs font-mono text-accent select-all break-all text-left px-2 font-medium">
+            00020126330014BR.GOV.BCB.PIX0111114506555485204000053039865802BR5925JOICE KELLY SANTOS ANUNCI6009SAO PAULO62290525NWMwOTc2M2MtNzU0Yy00MDMyL63049A92
+          </span>
+          <button id="btnCopyPix" class="w-full sm:w-auto px-6 py-3 bg-primary text-white text-xs font-semibold rounded-xl hover:bg-primary-dark transition shrink-0 shadow-sm">
+            Copiar Chave PIX
+          </button>
+        </div>
+        <p id="copyToast" class="text-xs text-emerald-600 font-semibold hidden animate-fade-in">
+          ✓ Chave PIX copiada com sucesso!
+        </p>
+      </div>
+
+      <!-- Presente Personalizado (Escolha do Convidado) -->
+      <div class="bg-white p-8 sm:p-10 rounded-3xl border border-primary-light/60 shadow-xs space-y-6">
+        <div class="text-center space-y-2">
+          <span class="text-3xl">🎁</span>
+          <h2 class="font-display text-3xl text-accent font-semibold">Presente da Sua Escolha</h2>
+          <p class="text-xs sm:text-sm text-text-muted max-w-md mx-auto">
+            Quer presentear os noivos com um valor específico ou um presente personalizado que não está nas cotas? Preencha o valor e a mensagem abaixo!
+          </p>
+        </div>
+
+        <form id="customGiftForm" class="max-w-md mx-auto space-y-4">
+          <div>
+            <label for="giftNome" class="block text-xs uppercase tracking-wider font-semibold text-accent mb-1">Seu Nome *</label>
+            <input type="text" id="giftNome" required placeholder="Digite seu nome completo" class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label for="giftValor" class="block text-xs uppercase tracking-wider font-semibold text-accent mb-1">Valor do Presente (R$) *</label>
+            <input type="number" id="giftValor" min="1" step="any" required placeholder="Ex: 150.00" class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+          </div>
+
+          <div>
+            <label for="giftItem" class="block text-xs uppercase tracking-wider font-semibold text-accent mb-1">Descrição do Presente / Mensagem *</label>
+            <input type="text" id="giftItem" required placeholder="Ex: Jantar de casados, Jogo de panelas, Presente especial..." class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+          </div>
+
+          <button type="submit" id="btnCustomGift" class="w-full py-3.5 bg-primary text-white text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-primary-dark transition shadow-sm">
+            Confirmar e Copiar PIX
+          </button>
+        </form>
+      </div>
+
+      <!-- Honeymoon Quotas -->
+      <div class="space-y-6">
+        <h2 class="font-display text-3xl text-accent text-center font-semibold">Cotas para a Lua de Mel</h2>
+        
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-2xl border border-primary-light/60 shadow-xs space-y-4 flex flex-col justify-between hover:border-primary transition">
+            <div class="space-y-2">
+              <span class="text-3xl">☕</span>
+              <h3 class="font-display text-xl text-accent font-semibold">Café da Manhã Romântico</h3>
+              <p class="text-xs text-text-muted">Um café especial na cama para os noivos começarem o dia.</p>
+            </div>
+            <div class="pt-2 border-t border-primary-light/40 flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">R$ 100,00</span>
+              <button onclick="copiarPixComValor('100.00', 'Café da Manhã Romântico')" class="px-3 py-1.5 bg-primary-light/50 text-primary-dark text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition">
+                Presentear
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-primary-light/60 shadow-xs space-y-4 flex flex-col justify-between hover:border-primary transition">
+            <div class="space-y-2">
+              <span class="text-3xl">🍽️</span>
+              <h3 class="font-display text-xl text-accent font-semibold">Jantar à Luz de Velas</h3>
+              <p class="text-xs text-text-muted">Um jantar inesquecível na nossa viagem de lua de mel.</p>
+            </div>
+            <div class="pt-2 border-t border-primary-light/40 flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">R$ 250,00</span>
+              <button onclick="copiarPixComValor('250.00', 'Jantar à Luz de Velas')" class="px-3 py-1.5 bg-primary-light/50 text-primary-dark text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition">
+                Presentear
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl border border-primary-light/60 shadow-xs space-y-4 flex flex-col justify-between hover:border-primary transition">
+            <div class="space-y-2">
+              <span class="text-3xl">✈️</span>
+              <h3 class="font-display text-xl text-accent font-semibold">Passeio Inesquecível</h3>
+              <p class="text-xs text-text-muted">Ajude os noivos a explorarem pontos turísticos no destino.</p>
+            </div>
+            <div class="pt-2 border-t border-primary-light/40 flex items-center justify-between">
+              <span class="text-sm font-bold text-primary">R$ 500,00</span>
+              <button onclick="copiarPixComValor('500.00', 'Passeio Inesquecível')" class="px-3 py-1.5 bg-primary-light/50 text-primary-dark text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition">
+                Presentear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 bg-accent text-white/80 text-center text-xs space-y-2">
+    <p class="font-script text-3xl text-primary-light">Matheus & Joice</p>
+    <p>© 2026 — Obrigado pelo carinho e generosidade!</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJM2-lSWoqrIEP9U1CXSWC0AKlNRoBfBs",
+      authDomain: "casamento-eb59e.firebaseapp.com",
+      projectId: "casamento-eb59e",
+      storageBucket: "casamento-eb59e.firebasestorage.app",
+      messagingSenderId: "765787340241",
+      appId: "1:765787340241:web:13cc936edaa5d1dcd8f4f0",
+      measurementId: "G-B271BQMX55"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const btnCopyPix = document.getElementById('btnCopyPix');
+    const pixKey = document.getElementById('pixKey').innerText.trim();
+    const copyToast = document.getElementById('copyToast');
+
+    const savedName = localStorage.getItem('nomeConvidado');
+    if (savedName) {
+      document.getElementById('giftNome').value = savedName;
+    }
+
+    btnCopyPix.addEventListener('click', () => {
+      navigator.clipboard.writeText(pixKey).then(() => {
+        copyToast.classList.remove('hidden');
+        setTimeout(() => copyToast.classList.add('hidden'), 4000);
+      });
+    });
+
+    window.copiarPixComValor = async (valor, item) => {
+      const nome = localStorage.getItem('nomeConvidado') || "Convidado";
+      try {
+        await addDoc(collection(db, "presentes"), {
+          nome: nome,
+          valor: parseFloat(valor),
+          item: item,
+          dataregistro: new Date()
+        });
+      } catch (e) {
+        console.error("Erro no registro de presente:", e);
+      }
+
+      navigator.clipboard.writeText(pixKey).then(() => {
+        alert(`Você escolheu presentear a cota: ${item} (R$ ${valor})!\n\nA chave PIX oficial foi copiada para a sua área de transferência. Basta colar no aplicativo do seu banco para concluir! ❤️`);
+      });
+    };
+
+    const customGiftForm = document.getElementById('customGiftForm');
+    customGiftForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('giftNome').value;
+      const valor = parseFloat(document.getElementById('giftValor').value);
+      const item = document.getElementById('giftItem').value;
+
+      try {
+        await addDoc(collection(db, "presentes"), {
+          nome: nome,
+          valor: valor,
+          item: item,
+          dataregistro: new Date()
+        });
+      } catch (e) {
+        console.error("Erro no registro de presente:", e);
+      }
+
+      navigator.clipboard.writeText(pixKey).then(() => {
+        alert(`Obrigado pelo carinho, ${nome}!\n\nSeu presente "${item}" no valor de R$ ${valor.toFixed(2)} foi registrado.\nA chave PIX oficial foi copiada para a sua área de transferência. Basta colar no aplicativo do seu banco! ❤️`);
+      });
+    });
+
+    // Mobile Menu Toggle Script
+    const btnMobileMenu = document.getElementById('btnMobileMenu');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('click', () => {
+        const isHidden = mobileDrawer.classList.contains('hidden');
+        if (isHidden) {
+          mobileDrawer.classList.remove('hidden');
+          hamburgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        } else {
+          mobileDrawer.classList.add('hidden');
+          hamburgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

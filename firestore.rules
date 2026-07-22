@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Coleção de Convidados (RSVP)
+    match /convidados/{doc} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if false;
+    }
+    
+    // Coleção de Recados (Mural ao vivo)
+    match /recados/{doc} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if false;
+    }
+    
+    // Coleção de Presentes (PIX e Presentes escolhidos)
+    match /presentes/{doc} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if false;
+    }
+    
+  }
+}

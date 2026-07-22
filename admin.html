@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel dos Noivos — Matheus & Joice</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #8B5CF6;
+      --color-primary-dark: #6D28D9;
+      --color-primary-light: #DDD6FE;
+      --color-accent: #18181B;
+      --color-accent-light: #27272A;
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F8F5FF;
+      --color-card-bg: #FFFFFF;
+      --color-text: #18181B;
+      --color-text-muted: #6B7280;
+
+      --font-display: "Cormorant Garamond", serif;
+      --font-script: "Pinyon Script", cursive;
+      --font-body: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-bg text-text font-body antialiased min-h-screen flex flex-col selection:bg-primary-light selection:text-primary-dark">
+
+  <!-- Header Nav -->
+  <header class="bg-accent text-white py-4 px-6 border-b border-primary-light/40">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <span class="font-script text-3xl text-primary-light">Matheus & Joice</span>
+        <span class="bg-primary/20 text-primary-light text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border border-primary/40">Painel Admin</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <button id="btnLogout" class="hidden text-xs text-white/70 hover:text-white transition underline">Sair</button>
+        <a href="index.html" class="text-xs text-white/70 hover:text-white transition">← Voltar ao Site</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Modal / Protection Overlay -->
+  <div id="loginOverlay" class="fixed inset-0 z-50 bg-accent/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-white p-8 sm:p-10 rounded-3xl border border-primary-light max-w-md w-full shadow-2xl space-y-6 text-center animate-fade-in">
+      <div class="w-16 h-16 bg-primary-light/50 text-primary-dark rounded-full flex items-center justify-center text-3xl mx-auto border border-primary-light">
+        🔒
+      </div>
+      
+      <div class="space-y-1">
+        <h2 class="font-display text-3xl text-accent font-bold">Acesso Restrito</h2>
+        <p class="text-xs text-text-muted">Área exclusiva para Matheus & Joice</p>
+      </div>
+
+      <form id="loginForm" class="space-y-4 text-left">
+        <div>
+          <label for="username" class="block text-xs uppercase font-semibold text-accent mb-1">Usuário *</label>
+          <input type="text" id="username" required placeholder="Digite o usuário" class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+        </div>
+
+        <div>
+          <label for="password" class="block text-xs uppercase font-semibold text-accent mb-1">Senha *</label>
+          <input type="password" id="password" required placeholder="Digite a senha" class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+        </div>
+
+        <p id="loginError" class="text-xs text-rose-600 font-semibold hidden text-center">
+          ⚠️ Usuário ou senha incorretos!
+        </p>
+
+        <button type="submit" class="w-full py-3.5 bg-primary text-white text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-primary-dark transition shadow-md">
+          Entrar no Painel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Main Area -->
+  <main id="adminDashboard" class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8 hidden">
+    
+    <!-- Title & Metrics Cards -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h1 class="font-display text-3xl sm:text-4xl text-accent font-bold">Resumo de Confirmações</h1>
+        <p class="text-xs sm:text-sm text-text-muted">Acompanhe a lista de convidados e mensagens em tempo real</p>
+      </div>
+
+      <button id="btnExportCsv" class="inline-flex items-center justify-center px-5 py-2.5 bg-primary text-white text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-primary-dark transition shadow-xs">
+        📥 Exportar para CSV
+      </button>
+    </div>
+
+    <!-- Summary Metrics Grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      <div class="bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-1">
+        <span class="text-xs text-text-muted uppercase font-semibold">Total Respostas</span>
+        <p id="metricTotal" class="font-display text-3xl sm:text-4xl font-bold text-accent">0</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-1">
+        <span class="text-xs text-emerald-600 uppercase font-semibold">Confirmados (Sim)</span>
+        <p id="metricSim" class="font-display text-3xl sm:text-4xl font-bold text-emerald-600">0</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-1">
+        <span class="text-xs text-rose-600 uppercase font-semibold">Ausentes (Não)</span>
+        <p id="metricNao" class="font-display text-3xl sm:text-4xl font-bold text-rose-600">0</p>
+      </div>
+
+      <div class="bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-1">
+        <span class="text-xs text-primary uppercase font-semibold">Com Restrições</span>
+        <p id="metricRestricoes" class="font-display text-3xl sm:text-4xl font-bold text-primary">0</p>
+      </div>
+    </div>
+
+    <!-- Guest Table Container -->
+    <div class="bg-white rounded-3xl border border-primary-light/60 shadow-xs overflow-hidden">
+      <div class="p-5 sm:p-6 border-b border-primary-light/40 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <h2 class="font-display text-2xl text-accent font-semibold">Lista de Convidados</h2>
+        
+        <!-- Search & Filter Controls -->
+        <div class="flex gap-2">
+          <input type="text" id="searchInput" placeholder="Buscar por nome..." class="px-4 py-2 rounded-xl border border-primary-light text-xs bg-bg-alt/40 focus:outline-none focus:border-primary">
+          <select id="filterSelect" class="px-3 py-2 rounded-xl border border-primary-light text-xs bg-bg-alt/40 focus:outline-none focus:border-primary">
+            <option value="todos">Todos os Status</option>
+            <option value="sim">Confirmados</option>
+            <option value="nao">Ausentes</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Responsive Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-bg-alt/60 text-[11px] uppercase tracking-wider text-text-muted border-b border-primary-light/40">
+              <th class="py-3.5 px-6 font-semibold">Nome Convidado</th>
+              <th class="py-3.5 px-6 font-semibold">Status Presença</th>
+              <th class="py-3.5 px-6 font-semibold">Restrições / Observações</th>
+              <th class="py-3.5 px-6 font-semibold">Data Registro</th>
+            </tr>
+          </thead>
+          <tbody id="guestsTableBody" class="divide-y divide-primary-light/30 text-xs sm:text-sm">
+            <tr>
+              <td colspan="4" class="py-8 text-center text-text-muted italic">Carregando respostas do Firestore...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-6 bg-accent text-white/70 text-center text-xs">
+    <p>Painel Administrativo do Casamento Matheus & Joice</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJM2-lSWoqrIEP9U1CXSWC0AKlNRoBfBs",
+      authDomain: "casamento-eb59e.firebaseapp.com",
+      projectId: "casamento-eb59e",
+      storageBucket: "casamento-eb59e.firebasestorage.app",
+      messagingSenderId: "765787340241",
+      appId: "1:765787340241:web:13cc936edaa5d1dcd8f4f0",
+      measurementId: "G-B271BQMX55"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const loginOverlay = document.getElementById('loginOverlay');
+    const adminDashboard = document.getElementById('adminDashboard');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const btnLogout = document.getElementById('btnLogout');
+
+    function checkAuth() {
+      if (sessionStorage.getItem('adminAuthed') === 'true') {
+        loginOverlay.classList.add('hidden');
+        adminDashboard.classList.remove('hidden');
+        btnLogout.classList.remove('hidden');
+        initDashboard();
+      } else {
+        loginOverlay.classList.remove('hidden');
+        adminDashboard.classList.add('hidden');
+        btnLogout.classList.add('hidden');
+      }
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if (user === 'noivosadmin' && pass === 'Admin0401') {
+        sessionStorage.setItem('adminAuthed', 'true');
+        loginError.classList.add('hidden');
+        checkAuth();
+      } else {
+        loginError.classList.remove('hidden');
+      }
+    });
+
+    btnLogout.addEventListener('click', () => {
+      sessionStorage.removeItem('adminAuthed');
+      checkAuth();
+    });
+
+    checkAuth();
+
+    let allGuests = [];
+    const guestsTableBody = document.getElementById('guestsTableBody');
+    const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('filterSelect');
+    const btnExportCsv = document.getElementById('btnExportCsv');
+
+    function initDashboard() {
+      try {
+        const q = query(collection(db, "convidados"), orderBy("dataregistro", "desc"));
+        onSnapshot(q, (snapshot) => {
+          allGuests = [];
+          snapshot.forEach((doc) => {
+            allGuests.push(doc.data());
+          });
+          updateMetrics();
+          renderTable();
+        });
+      } catch (err) {
+        console.error("Erro ao carregar Firestore admin:", err);
+      }
+    }
+
+    function updateMetrics() {
+      const total = allGuests.length;
+      const simCount = allGuests.filter(g => g.presenca === 'sim').length;
+      const naoCount = allGuests.filter(g => g.presenca === 'nao').length;
+      const restrCount = allGuests.filter(g => g.restricoes && g.restricoes.trim() !== '').length;
+
+      document.getElementById('metricTotal').textContent = total;
+      document.getElementById('metricSim').textContent = simCount;
+      document.getElementById('metricNao').textContent = naoCount;
+      document.getElementById('metricRestricoes').textContent = restrCount;
+    }
+
+    function renderTable() {
+      const search = searchInput.value.toLowerCase();
+      const filter = filterSelect.value;
+
+      const filtered = allGuests.filter(guest => {
+        const matchesSearch = (guest.nome || '').toLowerCase().includes(search);
+        const matchesFilter = filter === 'todos' || guest.presenca === filter;
+        return matchesSearch && matchesFilter;
+      });
+
+      if (filtered.length === 0) {
+        guestsTableBody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-8 text-center text-text-muted italic">Nenhum convidado encontrado.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      guestsTableBody.innerHTML = filtered.map(guest => {
+        const isSim = guest.presenca === 'sim';
+        const badgeClass = isSim ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700';
+        const statusText = isSim ? '✓ Confirmado' : '✗ Ausente';
+        const dateFormatted = guest.dataregistro ? new Date(guest.dataregistro.seconds * 1000 || guest.dataregistro).toLocaleDateString('pt-BR') : '-';
+
+        return `
+          <tr class="hover:bg-bg-alt/50 transition">
+            <td class="py-4 px-6 font-semibold text-accent">${guest.nome || 'Sem nome'}</td>
+            <td class="py-4 px-6">
+              <span class="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase ${badgeClass}">
+                ${statusText}
+              </span>
+            </td>
+            <td class="py-4 px-6 text-text-muted">${guest.restricoes || '-'}</td>
+            <td class="py-4 px-6 text-text-muted text-xs">${dateFormatted}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    searchInput.addEventListener('input', renderTable);
+    filterSelect.addEventListener('change', renderTable);
+
+    btnExportCsv.addEventListener('click', () => {
+      if (allGuests.length === 0) {
+        alert("Não há dados de convidados para exportar.");
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,Nome;Presenca;Restricoes;DataRegistro\n";
+
+      allGuests.forEach(g => {
+        const row = [
+          `"${(g.nome || '').replace(/"/g, '""')}"`,
+          `"${g.presenca === 'sim' ? 'Confirmado' : 'Ausente'}"`,
+          `"${(g.restricoes || '').replace(/"/g, '""')}"`,
+          `"${g.dataregistro ? new Date(g.dataregistro.seconds * 1000 || g.dataregistro).toLocaleDateString('pt-BR') : ''}"`
+        ].join(';');
+        csvContent += row + "\n";
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "lista_convidados_casamento.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  </script>
+</body>
+</html>

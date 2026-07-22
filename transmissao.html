@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transmissão ao Vivo (Zoom) & Recados — Matheus & Joice</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @theme {
+      --color-primary: #8B5CF6;
+      --color-primary-dark: #6D28D9;
+      --color-primary-light: #DDD6FE;
+      --color-accent: #18181B;
+      --color-accent-light: #27272A;
+      --color-bg: #FFFFFF;
+      --color-bg-alt: #F8F5FF;
+      --color-card-bg: #FFFFFF;
+      --color-text: #18181B;
+      --color-text-muted: #6B7280;
+
+      --font-display: "Cormorant Garamond", serif;
+      --font-script: "Pinyon Script", cursive;
+      --font-body: "Montserrat", sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-[#FAF5FF] via-[#F5EDFF] to-[#E9D5FF] text-text font-body antialiased min-h-screen flex flex-col selection:bg-primary-light selection:text-primary-dark">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-primary-light/50 shadow-xs transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="font-script text-3xl sm:text-4xl text-accent hover:text-primary transition">Matheus & Joice</a>
+      
+      <!-- Desktop Menu -->
+      <div class="hidden xl:flex items-center space-x-6 text-[11px] font-semibold tracking-wider uppercase text-accent/80">
+        <a href="index.html" class="hover:text-primary transition whitespace-nowrap">Início</a>
+        <a href="index.html#historia" class="hover:text-primary transition whitespace-nowrap">Nossa História</a>
+        <a href="index.html#cerimonia" class="hover:text-primary transition whitespace-nowrap">Cerimônia</a>
+        <a href="index.html#traje" class="hover:text-primary transition whitespace-nowrap">Traje</a>
+        <a href="index.html#faq" class="hover:text-primary transition whitespace-nowrap">FAQ</a>
+        <a href="galeria.html" class="hover:text-primary transition whitespace-nowrap">Galeria</a>
+        <a href="presentes.html" class="hover:text-primary transition whitespace-nowrap">Presentes</a>
+        <a href="transmissao.html" class="hover:text-primary transition whitespace-nowrap">Ao Vivo</a>
+      </div>
+
+      <!-- Quick Action CTA & Mobile Menu Toggle Button -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="index.html#rsvp" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary text-white text-[11px] uppercase font-bold tracking-wider hover:bg-primary-dark shadow-xs transition whitespace-nowrap">
+          Confirmar Presença
+        </a>
+
+        <!-- Hamburger Icon Button for Mobile & Medium screens -->
+        <button id="btnMobileMenu" aria-label="Abrir Menu" class="xl:hidden p-2.5 rounded-xl border border-primary-light text-accent hover:bg-bg-alt focus:outline-none min-h-[44px] min-w-[44px] flex items-center justify-center">
+          <svg id="hamburgerIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileDrawer" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-primary-light px-4 py-6 space-y-3 animate-fade-in shadow-lg">
+      <a href="index.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Início</a>
+      <a href="index.html#historia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Nossa História</a>
+      <a href="index.html#cerimonia" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Cerimônia</a>
+      <a href="index.html#traje" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Traje</a>
+      <a href="index.html#faq" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">FAQ</a>
+      <a href="index.html#rsvp" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">RSVP (Confirmar Presença)</a>
+      <a href="galeria.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Galeria</a>
+      <a href="presentes.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Presentes</a>
+      <a href="transmissao.html" class="block py-2.5 px-4 rounded-xl text-sm font-semibold text-accent hover:bg-bg-alt hover:text-primary transition">Ao Vivo</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-28 pb-16 px-4">
+    <div class="max-w-4xl mx-auto space-y-12">
+      
+      <!-- Welcome Header -->
+      <div class="text-center space-y-4">
+        <span class="text-xs uppercase tracking-[0.2em] text-primary font-bold bg-white px-4 py-1.5 rounded-full border border-primary-light shadow-xs">
+          Transmissão via Zoom Meeting
+        </span>
+        <h1 class="font-display text-4xl sm:text-6xl text-accent font-semibold">Assista ao Vivo no Zoom</h1>
+        <p class="text-text-muted text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+          Para você que não poderá estar presencialmente, acompanhe a nossa cerimônia ao vivo pelo Zoom Meeting e compartilhe seu carinho conosco!
+        </p>
+      </div>
+
+      <!-- Zoom Meeting Integration Card -->
+      <div class="bg-white p-6 sm:p-10 rounded-3xl border border-primary-light/60 shadow-xs text-center space-y-6">
+        <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto border border-blue-200">
+          📹
+        </div>
+        
+        <div class="space-y-2">
+          <h2 class="font-display text-3xl text-accent font-semibold">Sala do Zoom Meeting</h2>
+          <p class="text-xs sm:text-sm text-text-muted">A reunião será aberta 15 minutos antes do início da cerimônia</p>
+        </div>
+
+        <!-- Zoom Details Box -->
+        <div class="max-w-lg mx-auto bg-bg-alt p-6 rounded-2xl border border-primary-light/60 text-left space-y-3">
+          <div class="flex justify-between border-b border-primary-light/40 pb-2 text-xs sm:text-sm">
+            <span class="text-text-muted font-medium">ID da Reunião (Meeting ID):</span>
+            <strong class="text-accent font-mono">845 9912 3400</strong>
+          </div>
+          <div class="flex justify-between text-xs sm:text-sm">
+            <span class="text-text-muted font-medium">Senha de Acesso (Passcode):</span>
+            <strong class="text-primary font-mono">123456</strong>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="pt-2">
+          <a href="https://zoom.us/j/84599123400?pwd=placeholder_token" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-[#2D8CFF] text-white text-sm font-semibold rounded-xl hover:bg-blue-600 shadow-md transition gap-2">
+            <span>🎥 Entrar na Reunião do Zoom</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mural de Recados em Tempo Real -->
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        
+        <!-- Formulário para Enviar Recado -->
+        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-primary-light/60 shadow-xs space-y-6">
+          <div>
+            <h2 class="font-display text-2xl text-accent font-semibold">Deixe um Recado</h2>
+            <p class="text-xs text-text-muted mt-1">Sua mensagem aparecerá no mural em tempo real para os noivos.</p>
+          </div>
+
+          <form id="recadoForm" class="space-y-4">
+            <div>
+              <label for="autor" class="block text-xs uppercase font-semibold text-accent mb-1">Seu Nome *</label>
+              <input type="text" id="autor" required placeholder="Como quer ser identificado" class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary">
+            </div>
+
+            <div>
+              <label for="mensagem" class="block text-xs uppercase font-semibold text-accent mb-1">Sua Mensagem *</label>
+              <textarea id="mensagem" rows="4" required placeholder="Escreva seus votos de carinho para os noivos..." class="w-full px-4 py-3 rounded-xl border border-primary-light bg-bg-alt/40 text-sm text-accent focus:outline-none focus:border-primary"></textarea>
+            </div>
+
+            <button type="submit" id="btnRecado" class="w-full py-3.5 bg-primary text-white text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-primary-dark transition shadow-sm">
+              Publicar Recado
+            </button>
+          </form>
+        </div>
+
+        <!-- Lista de Recados em Tempo Real -->
+        <div class="space-y-4">
+          <h2 class="font-display text-2xl text-accent font-semibold">Mural de Recados</h2>
+          
+          <div id="muralContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+            <div class="bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-sm text-accent">Família & Amigos</span>
+                <span class="text-[10px] text-text-muted">Mural</span>
+              </div>
+              <p class="text-xs text-text-muted leading-relaxed">
+                "Desejamos toda a felicidade do mundo nessa nova caminhada! Que Deus abençoe essa união linda!" ❤️
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-8 bg-accent text-white/80 text-center text-xs space-y-2">
+    <p class="font-script text-3xl text-primary-light">Matheus & Joice</p>
+    <p>© 2026 — Transmissão Zoom realizada com carinho.</p>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJM2-lSWoqrIEP9U1CXSWC0AKlNRoBfBs",
+      authDomain: "casamento-eb59e.firebaseapp.com",
+      projectId: "casamento-eb59e",
+      storageBucket: "casamento-eb59e.firebasestorage.app",
+      messagingSenderId: "765787340241",
+      appId: "1:765787340241:web:13cc936edaa5d1dcd8f4f0",
+      measurementId: "G-B271BQMX55"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const savedName = localStorage.getItem('nomeConvidado');
+    if (savedName) {
+      document.getElementById('autor').value = savedName;
+    }
+
+    const recadoForm = document.getElementById('recadoForm');
+    const btnRecado = document.getElementById('btnRecado');
+    const muralContainer = document.getElementById('muralContainer');
+
+    recadoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const autor = document.getElementById('autor').value;
+      const mensagem = document.getElementById('mensagem').value;
+
+      btnRecado.disabled = true;
+      btnRecado.textContent = 'Publicando...';
+
+      try {
+        await addDoc(collection(db, "recados"), {
+          autor: autor,
+          mensagem: mensagem,
+          dataregistro: new Date()
+        });
+
+        document.getElementById('mensagem').value = '';
+        btnRecado.disabled = false;
+        btnRecado.textContent = 'Publicar Recado';
+      } catch (err) {
+        console.error("Erro ao publicar recado:", err);
+        alert("Ops! Ocorreu um erro ao postar sua mensagem.");
+        btnRecado.disabled = false;
+        btnRecado.textContent = 'Publicar Recado';
+      }
+    });
+
+    try {
+      const q = query(collection(db, "recados"), orderBy("dataregistro", "desc"));
+      onSnapshot(q, (snapshot) => {
+        if (!snapshot.empty) {
+          muralContainer.innerHTML = '';
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            const dateFormatted = data.dataregistro ? new Date(data.dataregistro.seconds * 1000 || data.dataregistro).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : '';
+            
+            const card = document.createElement('div');
+            card.className = "bg-white p-5 rounded-2xl border border-primary-light/60 shadow-xs space-y-2 animate-fade-in";
+            card.innerHTML = `
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-sm text-accent">${data.autor}</span>
+                <span class="text-[10px] text-text-muted">${dateFormatted}</span>
+              </div>
+              <p class="text-xs text-text-muted leading-relaxed">${data.mensagem}</p>
+            `;
+            muralContainer.appendChild(card);
+          });
+        }
+      });
+    } catch (e) {
+      console.log("Aguardando carregamento de mensagens.", e);
+    }
+
+    // Mobile Menu Toggle Script
+    const btnMobileMenu = document.getElementById('btnMobileMenu');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const hamburgerIcon = document.getElementById('hamburgerIcon');
+    const closeIcon = document.getElementById('closeIcon');
+
+    if (btnMobileMenu) {
+      btnMobileMenu.addEventListener('click', () => {
+        const isHidden = mobileDrawer.classList.contains('hidden');
+        if (isHidden) {
+          mobileDrawer.classList.remove('hidden');
+          hamburgerIcon.classList.add('hidden');
+          closeIcon.classList.remove('hidden');
+        } else {
+          mobileDrawer.classList.add('hidden');
+          hamburgerIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
