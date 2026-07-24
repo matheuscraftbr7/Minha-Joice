@@ -379,7 +379,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDJM2-lSWoqrIEP9U1CXSWC0AKlNRoBfBs",
@@ -410,62 +410,11 @@
       });
     });
 
-    // Escuta em tempo real para desabilitar presentes já escolhidos (Escolha Única)
-    onSnapshot(collection(db, "presentes"), (snapshot) => {
-      const escolhidos = [];
-      snapshot.forEach(doc => {
-        const d = doc.data();
-        if (d.item) {
-          escolhidos.push(d.item.toLowerCase().trim());
-        }
-      });
-
-      // Seletor para todos os botões de presente que possuem a chamada onclick com copiarPixComValor
-      const buttons = document.querySelectorAll("button[onclick^='copiarPixComValor']");
-      buttons.forEach(btn => {
-        // Extrai o nome do item do atributo onclick, ex: copiarPixComValor('120.00', 'Jogo de Talheres')
-        const match = btn.getAttribute("onclick").match(/'[^']+',\s*'([^']+)'/);
-        if (match && match[1]) {
-          const itemName = match[1].toLowerCase().trim();
-          const card = btn.closest(".bg-white");
-          
-          if (escolhidos.includes(itemName)) {
-            btn.disabled = true;
-            btn.innerHTML = "Já Escolhido ✓";
-            btn.className = "px-3 py-1.5 bg-gray-200 text-gray-500 text-xs font-semibold rounded-lg cursor-not-allowed";
-            if (card) {
-              card.classList.add("opacity-60");
-            }
-          } else {
-            // Se o presente foi liberado ou não foi escolhido ainda
-            btn.disabled = false;
-            // Para as cotas da lua de mel, mantemos a lógica, mas só aplicamos o estilo padrão se não for cota
-            const isCota = ["café da manhã romântico", "jantar à luz de velas", "passeio inesquecível"].includes(itemName);
-            if (!isCota) {
-              btn.innerHTML = "Presentear";
-              btn.className = "px-3 py-1.5 bg-primary-light/50 text-primary-dark text-xs font-semibold rounded-lg hover:bg-primary hover:text-white transition";
-              if (card) card.classList.remove("opacity-60");
-            }
-          }
-        }
-      });
-    });
-
     window.copiarPixComValor = async (valor, item) => {
-      const nome = localStorage.getItem('nomeConvidado') || "";
-      if (!nome) {
-        const inputNome = prompt("Por favor, digite seu nome para registrar quem enviou o presente:");
-        if (!inputNome || !inputNome.trim()) {
-          alert("Nome é necessário para presentear!");
-          return;
-        }
-        localStorage.setItem('nomeConvidado', inputNome.trim());
-      }
-      
-      const nomeFinal = localStorage.getItem('nomeConvidado');
+      const nome = localStorage.getItem('nomeConvidado') || "Convidado";
       try {
         await addDoc(collection(db, "presentes"), {
-          nome: nomeFinal,
+          nome: nome,
           valor: parseFloat(valor),
           item: item,
           dataregistro: new Date()
@@ -475,7 +424,7 @@
       }
 
       navigator.clipboard.writeText(pixKey).then(() => {
-        alert(`Você escolheu presentear: ${item} (R$ ${valor})!\n\nA chave PIX oficial foi copiada para a sua área de transferência. Basta colar no aplicativo do seu banco para concluir! ❤️`);
+        alert(`Você escolheu presentear a cota: ${item} (R$ ${valor})!\n\nA chave PIX oficial foi copiada para a sua área de transferência. Basta colar no aplicativo do seu banco para concluir! ❤️`);
       });
     };
 

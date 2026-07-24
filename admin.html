@@ -156,32 +156,6 @@
       </div>
     </div>
 
-    <!-- Gifts Selected Table Container -->
-    <div class="bg-white rounded-3xl border border-primary-light/60 shadow-xs overflow-hidden">
-      <div class="p-5 sm:p-6 border-b border-primary-light/40">
-        <h2 class="font-display text-2xl text-accent font-semibold">Presentes Escolhidos</h2>
-        <p class="text-xs text-text-muted">Acompanhe quem escolheu cada presente físico ou cota</p>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="bg-bg-alt/60 text-[11px] uppercase tracking-wider text-text-muted border-b border-primary-light/40">
-              <th class="py-3.5 px-6 font-semibold">Presente / Item</th>
-              <th class="py-3.5 px-6 font-semibold">Valor Contribuído</th>
-              <th class="py-3.5 px-6 font-semibold">Quem Presenteou</th>
-              <th class="py-3.5 px-6 font-semibold">Data do Registro</th>
-            </tr>
-          </thead>
-          <tbody id="giftsTableBody" class="divide-y divide-primary-light/30 text-xs sm:text-sm">
-            <tr>
-              <td colspan="4" class="py-8 text-center text-text-muted italic">Carregando lista de presentes...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </main>
 
   <footer class="py-6 bg-accent text-white/70 text-center text-xs">
@@ -250,25 +224,17 @@
     const searchInput = document.getElementById('searchInput');
     const filterSelect = document.getElementById('filterSelect');
     const btnExportCsv = document.getElementById('btnExportCsv');
-    const giftsTableBody = document.getElementById('giftsTableBody');
 
     function initDashboard() {
       try {
-        // Carrega convidados
-        const qGuests = query(collection(db, "convidados"), orderBy("dataregistro", "desc"));
-        onSnapshot(qGuests, (snapshot) => {
+        const q = query(collection(db, "convidados"), orderBy("dataregistro", "desc"));
+        onSnapshot(q, (snapshot) => {
           allGuests = [];
           snapshot.forEach((doc) => {
             allGuests.push(doc.data());
           });
           updateMetrics();
           renderTable();
-        });
-
-        // Carrega presentes escolhidos
-        const qGifts = query(collection(db, "presentes"), orderBy("dataregistro", "desc"));
-        onSnapshot(qGifts, (snapshot) => {
-          renderGiftsTable(snapshot);
         });
       } catch (err) {
         console.error("Erro ao carregar Firestore admin:", err);
@@ -325,35 +291,6 @@
           </tr>
         `;
       }).join('');
-    }
-
-    function renderGiftsTable(snapshot) {
-      if (snapshot.empty) {
-        giftsTableBody.innerHTML = `
-          <tr>
-            <td colspan="4" class="py-8 text-center text-text-muted italic">Nenhum presente foi escolhido ainda.</td>
-          </tr>
-        `;
-        return;
-      }
-
-      const rows = [];
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const valorFormatted = data.valor ? `R$ ${parseFloat(data.valor).toFixed(2).replace('.', ',')}` : '-';
-        const dateFormatted = data.dataregistro ? new Date(data.dataregistro.seconds * 1000 || data.dataregistro).toLocaleDateString('pt-BR') : '-';
-        
-        rows.push(`
-          <tr class="hover:bg-bg-alt/50 transition">
-            <td class="py-4 px-6 font-semibold text-accent">${data.item || 'Sem descrição'}</td>
-            <td class="py-4 px-6 font-bold text-primary">${valorFormatted}</td>
-            <td class="py-4 px-6 text-text-muted">${data.nome || 'Anônimo'}</td>
-            <td class="py-4 px-6 text-text-muted text-xs">${dateFormatted}</td>
-          </tr>
-        `);
-      });
-
-      giftsTableBody.innerHTML = rows.join('');
     }
 
     searchInput.addEventListener('input', renderTable);
